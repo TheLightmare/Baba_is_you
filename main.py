@@ -23,13 +23,14 @@ class Game() :
     
   def new(self) :
     self.all_sprites = pg.sprite.Group()
-    self.player = Player(self, 10, 10)
+    self.player = Player(self, 40, 20)
   
   def run(self) :
     self.playing = True
     while self.playing :
       self.events()
-    
+      self.draw()
+      
   def quit(self) :
     pg.quit()
     sys.exit()
