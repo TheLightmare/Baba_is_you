@@ -11,19 +11,29 @@ import sys
 from settings import *
 from sprites import *
 
-WIDTH = 600
-HEIGHT = 500
-
+WIDTH = 1200
+HEIGHT = 800
 
 class Game() :
 
   def __init__(self) :
     self.screen = pg.display.set_mode((WIDTH, HEIGHT))
     pg.key.set_repeat(500, 100)
-    
+    self.load_data()
+  
+  def load_data(self):
+    game_folder = path.dirname(__file__)
+    img_folder = path.join(game_folder, "sprites")
+    self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
+    self.wall_img = pg.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
+    self.flag_img = pg.image.load(path.join(img_folder, FLAG_IMG)).convert_alpha()
   def new(self) :
     self.all_sprites = pg.sprite.Group()
     self.player = Player(self, 40, 20)
+    self.flag = Flag(self, 300, 200)
+    self.walls = []
+    for i in range(0, 10) :
+      self.walls.append(Wall(self, i*TILESIZE, 100))
   
   def run(self) :
     self.playing = True
@@ -54,11 +64,10 @@ class Game() :
             
 game = Game()
 
-while True :
-  game.show_start_screen()
-  game.new()
-  game.run()
-  
+game.show_start_screen()
+game.new()
+game.run()
+
   
   
   
