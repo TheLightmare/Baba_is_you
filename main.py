@@ -24,16 +24,26 @@ class Game() :
   def load_data(self):
     game_folder = path.dirname(__file__)
     img_folder = path.join(game_folder, "sprites")
+    self.map_data = []
+    with open(path.join(game_folder, 'map.txt'), 'rt') as f :
+      for line in f :
+        self.map_data.append(line)
+        
     self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
     self.wall_img = pg.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
     self.flag_img = pg.image.load(path.join(img_folder, FLAG_IMG)).convert_alpha()
+  
   def new(self) :
     self.all_sprites = pg.sprite.Group()
-    self.player = Player(self, 40, 20)
-    self.flag = Flag(self, 300, 200)
-    self.walls = []
-    for i in range(0, 10) :
-      self.walls.append(Wall(self, i*TILESIZE, 100))
+    for row, tiles in enumerate(self.map_data) :
+      for col, tile in enumerate(tiles) :
+        if tile == '1' :
+          Wall(self, col * TILESIZE + TILESIZE/2, row * TILESIZE + TILESIZE/2)
+        if tile == 'p' :
+          self.player = Player(self, col * TILESIZE + TILESIZE/2, row * TILESIZE + TILESIZE/2)
+        if tile == 'f' :
+          Flag(self, col * TILESIZE + TILESIZE/2, row * TILESIZE + TILESIZE/2)
+
   
   def run(self) :
     self.playing = True
@@ -57,7 +67,7 @@ class Game() :
   def draw(self):
     self.screen.fill(BGCOLOR)
     self.all_sprites.draw(self.screen)
-    pg.display.flip()
+    pg.display.flip() # rafraichit la fenêtre
 
   def show_start_screen(self):
     pass

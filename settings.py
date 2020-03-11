@@ -7,7 +7,7 @@ Created on Wed Feb  5 09:32:17 2020
 
 import pygame as pg
 
-TILESIZE = 32
+TILESIZE = 48
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 BGCOLOR = (0, 0, 0)
