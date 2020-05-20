@@ -10,6 +10,7 @@ from os import path
 import sys
 from settings import *
 from sprites import *
+from tilemap import *
 
 WIDTH = 1200
 HEIGHT = 800
@@ -24,50 +25,60 @@ class Game() :
   def load_data(self):
     game_folder = path.dirname(__file__)
     img_folder = path.join(game_folder, "sprites")
-    self.map_data = []
-    with open(path.join(game_folder, 'map.txt'), 'rt') as f :
-      for line in f :
-        self.map_data.append(line)
-        
+    self.map = Map(path.join(game_folder, 'map.txt'))
     self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
     self.wall_img = pg.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
     self.flag_img = pg.image.load(path.join(img_folder, FLAG_IMG)).convert_alpha()
-  
+    
   def new(self) :
     self.all_sprites = pg.sprite.Group()
-    for row, tiles in enumerate(self.map_data) :
-      for col, tile in enumerate(tiles) :
-        if tile == '1' :
-          Wall(self, col * TILESIZE + TILESIZE/2, row * TILESIZE + TILESIZE/2)
-        if tile == 'p' :
-          self.player = Player(self, col * TILESIZE + TILESIZE/2, row * TILESIZE + TILESIZE/2)
-        if tile == 'f' :
-          Flag(self, col * TILESIZE + TILESIZE/2, row * TILESIZE + TILESIZE/2)
-
+    self.walls = pg.sprite.Group()
+    for row, tiles in enumerate(self.map.data):
+        for col, tile in enumerate(tiles):
+          if tile == '1':
+            Wall(self, col*TILESIZE, row*TILESIZE)
+          if tile == 'p':
+            self.player = Player(self, col, row)
   
   def run(self) :
     self.playing = True
     while self.playing :
       self.events()
+      self.update()
       self.draw()
-      
+
+  def update(self):
+    # update portion of the game loop
+    self.all_sprites.update()
+   
   def quit(self) :
     pg.quit()
     sys.exit()
+
+  def scan_map(self) :
+    pass
   
   def events(self):
     # catch all events here
     for event in pg.event.get():
       if event.type == pg.QUIT:
         self.quit()
-    keys = pg.key.get_pressed()
-    if keys[pg.K_ESCAPE] :
-      self.quit()
+      if event.type == pg.KEYDOWN:
+        if event.key == pg.K_ESCAPE:
+          self.quit()
+        if event.key == pg.K_LEFT:
+          self.player.move(dx=-1)
+        if event.key == pg.K_RIGHT:
+          self.player.move(dx=1)
+        if event.key == pg.K_UP:
+          self.player.move(dy=-1)
+        if event.key == pg.K_DOWN:
+          self.player.move(dy=1)
 
   def draw(self):
     self.screen.fill(BGCOLOR)
     self.all_sprites.draw(self.screen)
-    pg.display.flip() # rafraichit la fenêtre
+    pg.display.flip()
 
   def show_start_screen(self):
     pass

@@ -15,11 +15,20 @@ class Player(pg.sprite.Sprite) :
     self.game = game
     self.image = game.player_img
     self.rect = self.image.get_rect()
-    self.rect.center = (x, y)
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
     self.hit_rect = PLAYER_HIT_RECT
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+
+  def move(self, dx = 0, dy = 0) :
+    self.x += dx
+    self.y += dy
+
+  def update(self) :
+    self.rect.x = self.x * TILESIZE
+    self.rect.y = self.y * TILESIZE
+
 
 class Wall(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -28,7 +37,7 @@ class Wall(pg.sprite.Sprite) :
     self.game = game
     self.image = game.wall_img
     self.rect = self.image.get_rect()
-    self.rect.center = (x, y)
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
     self.hit_rect = WALL_HIT_RECT
     self.hit_rect.center = self.rect.center
     self.x = x
@@ -41,7 +50,7 @@ class Flag(pg.sprite.Sprite) :
     self.game = game
     self.image = game.flag_img
     self.rect = self.image.get_rect()
-    self.rect.center = (x, y)
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
     self.hit_rect = WALL_HIT_RECT
     self.hit_rect.center = self.rect.center
     self.x = x
