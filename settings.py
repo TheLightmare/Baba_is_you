@@ -17,5 +17,11 @@ PLAYER_IMG = "BABA_image.png"
 
 WALL_HIT_RECT = pg.Rect(0, 0, TILESIZE, TILESIZE)
 WALL_IMG = "WALL_center_image.png"
+WALL_OBJECT_IMG = "WALL_object.png"
+
+IS_OBJECT_IMG = "IS_white_object.png"
+
+PUSH_OBJECT_IMG = "PUSH_special_object.png"
 
 FLAG_IMG = "FLAG_image.png"
+

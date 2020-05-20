@@ -29,14 +29,27 @@ class Game() :
     self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
     self.wall_img = pg.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
     self.flag_img = pg.image.load(path.join(img_folder, FLAG_IMG)).convert_alpha()
+
+    self.wall_object_img = pg.image.load(path.join(img_folder, WALL_OBJECT_IMG)).convert_alpha()
+    self.is_object_img = pg.image.load(path.join(img_folder, IS_OBJECT_IMG)).convert_alpha()
+    self.push_object_img = pg.image.load(path.join(img_folder, PUSH_OBJECT_IMG)).convert_alpha()
     
   def new(self) :
     self.all_sprites = pg.sprite.Group()
+    self.objects = pg.sprite.Group()
     self.walls = pg.sprite.Group()
     for row, tiles in enumerate(self.map.data):
         for col, tile in enumerate(tiles):
-          if tile == '1':
+          if tile == 'w':
             Wall(self, col*TILESIZE, row*TILESIZE)
+          if tile == 'W':
+            Wall_object(self, col*TILESIZE, row*TILESIZE)
+          if tile == 'I':
+            Is_object(self, col*TILESIZE, row*TILESIZE)
+          if tile == 'P':
+            Push_object(self, col*TILESIZE, row*TILESIZE)
+          if tile == 'f':
+            Flag(self, col*TILESIZE, row*TILESIZE)
           if tile == 'p':
             self.player = Player(self, col, row)
   
@@ -50,13 +63,17 @@ class Game() :
   def update(self):
     # update portion of the game loop
     self.all_sprites.update()
+    self.scan_map()
    
   def quit(self) :
     pg.quit()
     sys.exit()
 
   def scan_map(self) :
-    pass
+    self.scan = []
+    for row, tiles in enumerate(self.map.data):
+        for col, tile in enumerate(tiles):
+          self.scan.append(tile)
   
   def events(self):
     # catch all events here
@@ -89,11 +106,5 @@ game.show_start_screen()
 game.new()
 game.run()
 
-  
-  
-  
-  
-  
-  
   
   
