@@ -12,8 +12,6 @@ from settings import *
 from sprites import *
 from tilemap import *
 
-WIDTH = 1200
-HEIGHT = 800
 
 class Game() :
 
@@ -51,7 +49,7 @@ class Game() :
           if tile == 'f':
             Flag(self, col*TILESIZE, row*TILESIZE)
           if tile == 'p':
-            self.player = Player(self, col, row)
+            self.player = Player(self, col*TILESIZE, row*TILESIZE)
   
   def run(self) :
     self.playing = True
@@ -83,14 +81,26 @@ class Game() :
       if event.type == pg.KEYDOWN:
         if event.key == pg.K_ESCAPE:
           self.quit()
-        if event.key == pg.K_LEFT:
-          self.player.move(dx=-1)
-        if event.key == pg.K_RIGHT:
-          self.player.move(dx=1)
-        if event.key == pg.K_UP:
-          self.player.move(dy=-1)
-        if event.key == pg.K_DOWN:
-          self.player.move(dy=1)
+        if event.key == pg.K_LEFT and self.player.x>0:
+          for i in range (0,TILESIZE):
+            self.player.move(dx=-1)
+            self.update()
+            self.draw()
+        if event.key == pg.K_RIGHT and self.player.x<WIDTH-TILESIZE:
+          for i in range (0,TILESIZE):
+            self.player.move(dx=1)
+            self.update()
+            self.draw()
+        if event.key == pg.K_UP and self.player.y>0:
+          for i in range (0,TILESIZE):
+            self.player.move(dy=-1)
+            self.update()
+            self.draw()
+        if event.key == pg.K_DOWN and self.player.y<HEIGHT-TILESIZE:
+          for i in range (0,TILESIZE):
+            self.player.move(dy=1)
+            self.update()
+            self.draw()
 
   def draw(self):
     self.screen.fill(BGCOLOR)

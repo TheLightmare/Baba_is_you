@@ -4,9 +4,10 @@ Created on Wed Feb  5 09:25:37 2020
 
 @author: m.kowalski
 """
-
+from time import*
 import pygame as pg
 from settings import *
+
 
 class Player(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -22,20 +23,36 @@ class Player(pg.sprite.Sprite) :
     self.y = y
 
   def move(self, dx=0, dy=0):
-    self.collide_with_objects(dx, dy)
+  
+    l=self.collide_with_objects(dx, dy)
+    dx=l[0]
+    dy=l[1]
     self.x += dx
     self.y += dy
+    
+     
+        
+        
+        
 
   def collide_with_objects(self, dx=0, dy=0):
     for obj in self.game.objects:
-      if obj.x == (self.x + dx)*TILESIZE and obj.y == (self.y + dy)*TILESIZE:
-        obj.x += dx*TILESIZE
-        obj.y += dy*TILESIZE
-        print(obj.x, obj.y)
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
 
   def update(self) :
-    self.rect.x = self.x * TILESIZE
-    self.rect.y = self.y * TILESIZE
+    self.rect.x = self.x 
+    self.rect.y = self.y 
 
 
 class Wall(pg.sprite.Sprite) :
@@ -50,6 +67,21 @@ class Wall(pg.sprite.Sprite) :
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+
   
 class Flag(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -63,6 +95,20 @@ class Flag(pg.sprite.Sprite) :
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
 
 class Wall_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -76,6 +122,21 @@ class Wall_object(pg.sprite.Sprite) :
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+            
 
   def update(self) :
     self.rect.x = self.x
@@ -94,6 +155,21 @@ class Is_object(pg.sprite.Sprite) :
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+    
 
   def update(self) :
     self.rect.x = self.x
@@ -111,6 +187,20 @@ class Push_object(pg.sprite.Sprite) :
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
 
   def update(self) :
     self.rect.x = self.x
