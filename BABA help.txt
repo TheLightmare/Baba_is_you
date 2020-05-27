@@ -1,0 +1,61 @@
+BABA IS YOU 
+
+-Instructions que je me suis faites
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+
+Pour inclure un nouvel objet :
+
+1. mettre le paragraphe en-dessous dans sprites.py (deleted)
+
+class nom_de_l_objet_(pg.sprite.Sprite) :
+    def __init__(self, game, x, y) :
+    self.groups = game.all_sprites
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.nom_de_l_objet_._img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = nom_de_l_objet_HIT_RECT* 
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+## *ou WALL_FIT_RECT ##
+
+2.Ajouter dans le setting.py (deleted)
+
+nom_de_l_objet_._img**_HIT_RECT* = pg.Rect(0, 0, TILESIZE, TILESIZE)
+nom_de_l_objet_._img** = "nom_de_l_objet*_center_image.png"
+## **En majuscules ##
+## *ou WALL_FIT_RECT ##
+
+3.Ajouter dans le def load_data(self): (dans le programme principal)
+
+self.nom_de_l_objet_._img = pg.image.load(path.join(img_folder, nom_de_l_objet_._img**).convert()_alpha
+## **En majuscules ##
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+
+Pour l'alignement des objet :
+
+
+1. mettre un def dans def events(self):
+
+
+def alignment(self): 
+
+
+
+
+
+
+TO DO :
+
+ALIGNEMENT DES MOTS + APPLICATION DES EFFETS EN FONCTION DES MOTS ALIGNES
+ CREATION DES OBJETS
