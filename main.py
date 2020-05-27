@@ -68,10 +68,14 @@ class Game() :
     sys.exit()
 
   def scan_map(self) :
-    self.scan = []
-    for row, tiles in enumerate(self.map.data):
-        for col, tile in enumerate(tiles):
-          self.scan.append(tile)
+    for is_obj in self.objects :
+      for other_obj_1 in self.objects :
+        for other_obj_2 in self.objects :
+          if type(is_obj) == Is_object and type(other_obj_1) != Is_object and type(other_obj_2) != Is_object :
+            if is_obj.x - TILESIZE == other_obj_1.x and is_obj.x + TILESIZE == other_obj_2.x and is_obj.y == other_obj_1.y and is_obj.y == other_obj_2.y:
+
+              if type(other_obj_1) == Wall_object and type(other_obj_2) == Push_object :
+                print("WIP detected !")
   
   def events(self):
     # catch all events here
