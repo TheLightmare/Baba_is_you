@@ -37,8 +37,7 @@ class Player(pg.sprite.Sprite) :
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
             l=obj.collide_with_objects(dx,dy)
-            dx=l[0]
-            dy=l[1]
+            
             obj.x += dx
             obj.y += dy
         else :
@@ -50,12 +49,9 @@ class Player(pg.sprite.Sprite) :
   def collide_with_walls(self, dx=0, dy=0):
     for wall in self.game.walls:
       if wall.x == self.x + TILESIZE*dx and wall.y == self.y + TILESIZE*dy:
-        print("collision")
-        dx=0
-        dy=0
         return 1
-      else :
-        return 0
+      
+    return 0
 
   def update(self) :
     self.rect.x = self.x 
