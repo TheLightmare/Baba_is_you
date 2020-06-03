@@ -1,0 +1,32 @@
+Dans le main :
+
+def test_wall_is_push(self):
+    self.scan = []
+    for row, tiles in enumerate(self.map.data):
+        for col, tile in enumerate(tiles):
+          if (tile=='W')and((self.scan=="")or(self.scan=="PI")):
+            self.scan.append(tile)
+          if ((tile=='I')and((self.scan=="W")or(self.scan=="P"))):
+            self.scan.append(tile)
+          if (tile=='P')and((self.scan=="")or(self.scan=="WI")):
+            self.scan.append(tile)
+    if (self.scan=="WIP")or(self.scan=="PIW"):
+      self.push=True
+    else:
+      self.push=False
+    
+    rotated = list(zip(*reversed(self.map.data)))
+
+    self.scan = []
+    for row, tiles in enumerate(rotated):
+        for col, tile in enumerate(tiles):
+          if (tile=='W')and((self.scan=="")or(self.scan=="PI")):
+            self.scan.append(tile)
+          if ((tile=='I')and((self.scan=="W")or(self.scan=="P"))):
+            self.scan.append(tile)
+          if (tile=='P')and((self.scan=="")or(self.scan=="WI")):
+            self.scan.append(tile)
+    if (self.scan=="WIP")or(self.scan=="PIW"):
+      self.push=True
+    else:
+      self.push=(self.push or False)
