@@ -19,6 +19,7 @@ class Game() :
     self.screen = pg.display.set_mode((WIDTH, HEIGHT))
     pg.key.set_repeat(500, 100)
     self.load_data()
+    self.wall_collision = 1
   
   def load_data(self):
     game_folder = path.dirname(__file__)
@@ -75,7 +76,7 @@ class Game() :
             if is_obj.x - TILESIZE == other_obj_1.x and is_obj.x + TILESIZE == other_obj_2.x and is_obj.y == other_obj_1.y and is_obj.y == other_obj_2.y:
 
               if type(other_obj_1) == Wall_object and type(other_obj_2) == Push_object :
-                print("WIP detected !")
+                self.wall_collision = 2
   
   def events(self):
     # catch all events here

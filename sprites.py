@@ -23,17 +23,14 @@ class Player(pg.sprite.Sprite) :
     self.y = y
 
   def move(self, dx=0, dy=0):
-  
-    l=self.collide_with_objects(dx, dy)
-    dx=l[0]
-    dy=l[1]
-    self.x += dx
-    self.y += dy
+    if self.collide_with_walls(dx, dy) != 1 :
+      l=self.collide_with_objects(dx, dy)
+   
+      dx=l[0]
+      dy=l[1]
+      self.x += dx
+      self.y += dy
     
-     
-        
-        
-        
 
   def collide_with_objects(self, dx=0, dy=0):
     for obj in self.game.objects:
@@ -49,6 +46,16 @@ class Player(pg.sprite.Sprite) :
             dx=0
     l=[dx,dy]
     return l
+
+  def collide_with_walls(self, dx=0, dy=0):
+    for wall in self.game.walls:
+      if wall.x == self.x + TILESIZE*dx and wall.y == self.y + TILESIZE*dy:
+        print("collision")
+        dx=0
+        dy=0
+        return 1
+      else :
+        return 0
 
   def update(self) :
     self.rect.x = self.x 
