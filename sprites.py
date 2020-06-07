@@ -112,6 +112,114 @@ class Flag(pg.sprite.Sprite) :
             dx=0
     l=[dx,dy]
     return l
+  
+class Box(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.box_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+
+class Key(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.key_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+
+class Rock(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.Rock_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+
+class Tile(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.tile_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
 
 class Wall_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -145,7 +253,102 @@ class Wall_object(pg.sprite.Sprite) :
     self.rect.x = self.x
     self.rect.y = self.y
 
+class Box_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.box_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+    
 
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
+
+class Key_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.key_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+    
+
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
+
+
+class Rock_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.rock_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+            l=obj.collide_with_objects(dx,dy)
+            dx=l[0]
+            dy=l[1]
+            obj.x += dx
+            obj.y += dy
+        else :
+            dy=0
+            dx=0
+    l=[dx,dy]
+    return l
+    
+
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
 class Is_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
     self.groups = game.all_sprites, game.objects

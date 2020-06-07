@@ -28,10 +28,16 @@ class Game() :
     self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
     self.wall_img = pg.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
     self.flag_img = pg.image.load(path.join(img_folder, FLAG_IMG)).convert_alpha()
+    self.box_img = pg.image.load(path.join(img_folder, BOX_IMG)).convert_alpha()
+    self.key_img = pg.image.load(path.join(img_folder, KEY_IMG)).convert_alpha()
+    self.rock_img = pg.image.load(path.join(img_folder, ROCK_IMG)).convert_alpha()
 
     self.wall_object_img = pg.image.load(path.join(img_folder, WALL_OBJECT_IMG)).convert_alpha()
     self.is_object_img = pg.image.load(path.join(img_folder, IS_OBJECT_IMG)).convert_alpha()
     self.push_object_img = pg.image.load(path.join(img_folder, PUSH_OBJECT_IMG)).convert_alpha()
+    self.box_object_img = pg.image.load(path.join(img_folder, BOX_OBJECT_IMG)).convert_alpha()
+    self.key_object_img = pg.image.load(path.join(img_folder, KEY_OBJECT_IMG)).convert_alpha()
+    self.rock_object_img = pg.image.load(path.join(img_folder, ROCK_OBJECT_IMG)).convert_alpha()
     
   def new(self) :
     self.all_sprites = pg.sprite.Group()
