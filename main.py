@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """
 Created on Wed Feb  5 08:26:01 2020
-
 @author: m.kowalski m.morgenthaler a.billaud
 """
 
@@ -42,6 +40,9 @@ class Game() :
   def new(self) :
     self.all_sprites = pg.sprite.Group()
     self.objects = pg.sprite.Group()
+    self.objects_is = pg.sprite.Group()
+    self.objects_names = pg.sprite.Group()
+    self.objects_atributes = pg.sprite.Group()
     self.walls = pg.sprite.Group()
     for row, tiles in enumerate(self.map.data):
         for col, tile in enumerate(tiles):
@@ -75,13 +76,11 @@ class Game() :
     sys.exit()
 
   def scan_map(self) :
-    for is_obj in self.objects :
-      for other_obj_1 in self.objects :
-        for other_obj_2 in self.objects :
-          if type(is_obj) == Is_object and type(other_obj_1) != Is_object and type(other_obj_2) != Is_object :
-            if is_obj.x - TILESIZE == other_obj_1.x and is_obj.x + TILESIZE == other_obj_2.x and is_obj.y == other_obj_1.y and is_obj.y == other_obj_2.y:
-
-              if type(other_obj_1) == Wall_object and type(other_obj_2) == Push_object :
+    for is_obj in self.objects_is :
+      for names_obj in self.objects_names :
+        for atributes_obj in self.objects_atributes :
+          if ((is_obj.x - TILESIZE == names_obj.x and is_obj.x + TILESIZE == atributes_obj.x) or (is_obj.x + TILESIZE == names_obj.x and is_obj.x - TILESIZE == atributes_obj.x)) and (is_obj.y == names_obj.y and is_obj.y == atributes_obj.y) or ((is_obj.y - TILESIZE == names_obj.y and is_obj.y + TILESIZE == atributes_obj.y) or (is_obj.y + TILESIZE == names_obj.y and is_obj.y - TILESIZE == atributes_obj.y)) and (is_obj.x == names_obj.x and is_obj.x == atributes_obj.x):
+            if type(names_obj) == Wall_object and type(atributes_obj) == Push_object :
                 self.wall_collision = 2
   
   def events(self):
@@ -126,6 +125,3 @@ game = Game()
 game.show_start_screen()
 game.new()
 game.run()
-
-  
-  

@@ -47,16 +47,64 @@ class Player(pg.sprite.Sprite) :
     return l
 
   def collide_with_walls(self, dx=0, dy=0):
-    for wall in self.game.walls:
-      if wall.x == self.x + TILESIZE*dx and wall.y == self.y + TILESIZE*dy:
-        return 1
+    if self.game.wall_collision == 1 :
+      for wall in self.game.walls:
+        if wall.x == self.x + TILESIZE*dx and wall.y == self.y + TILESIZE*dy:
+          return 1
       
-    return 0
+      return 0
+    elif self.game.wall_collision == 2 :
+      for wall in self.game.walls:
+        if wall.x == self.x+TILESIZE*dx and wall.y == self.y+TILESIZE*dy:
+          if (dx!=0 and wall.x <WIDTH-TILESIZE and wall.x>0) or (dy!=0 and wall.y <HEIGHT-TILESIZE and wall.y>0) :
+            l=wall.collide_with_objects(dx,dy) and wall.collide_with_walls(dx, dy)
+            
+            wall.x += dx
+            wall.y += dy
+          else :
+            dy=0
+            dx=0
+      l=[dx,dy]
+      return l
+      
 
   def update(self) :
     self.rect.x = self.x 
     self.rect.y = self.y 
 
+
+class Stop_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.groups = game.all_sprites, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.stop_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+
+  def collide_with_objects(self, dx=0, dy=0):
+    for obj in self.game.objects:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+         if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+           l=obj.collide_with_objects(dx,dy)
+           dx=l[0]
+           dy=l[1]
+           obj.x += dx
+           obj.y += dy
+         else :
+           dy=0
+           dx=0
+      l=[dx,dy]
+      return l
+    
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
+    
 
 class Wall(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -84,6 +132,31 @@ class Wall(pg.sprite.Sprite) :
             dx=0
     l=[dx,dy]
     return l
+
+  def collide_with_walls(self, dx=0, dy=0):
+    if self.game.wall_collision == 1 :
+      for wall in self.game.walls:
+        if wall.x == self.x + TILESIZE*dx and wall.y == self.y + TILESIZE*dy:
+          return 1
+      
+      return 0
+    elif self.game.wall_collision == 2 :
+      for wall in self.game.walls:
+        if wall.x == self.x+TILESIZE*dx and wall.y == self.y+TILESIZE*dy:
+          if (dx!=0 and wall.x <WIDTH-TILESIZE and wall.x>0) or (dy!=0 and wall.y <HEIGHT-TILESIZE and wall.y>0) :
+            l=wall.collide_with_objects(dx,dy) and wall.collide_with_walls(dx, dy)
+            
+            wall.x += dx
+            wall.y += dy
+          else :
+            dy=0
+            dx=0
+      l=[dx,dy]
+      return l
+
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
 
   
 class Flag(pg.sprite.Sprite) :
@@ -223,7 +296,7 @@ class Tile(pg.sprite.Sprite) :
 
 class Wall_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.wall_object_img
@@ -255,7 +328,7 @@ class Wall_object(pg.sprite.Sprite) :
 
 class Box_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.box_object_img
@@ -287,7 +360,7 @@ class Box_object(pg.sprite.Sprite) :
 
 class Key_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.key_object_img
@@ -320,7 +393,7 @@ class Key_object(pg.sprite.Sprite) :
 
 class Rock_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.rock_object_img
@@ -351,7 +424,7 @@ class Rock_object(pg.sprite.Sprite) :
     self.rect.y = self.y
 class Is_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects_is, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.is_object_img
@@ -383,7 +456,7 @@ class Is_object(pg.sprite.Sprite) :
     
 class Push_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects_atributes, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.push_object_img
