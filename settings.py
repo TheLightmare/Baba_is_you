@@ -30,14 +30,14 @@ FLAG_IMG = "FLAG_image.png"
 
 BOX_IMG = "BOX_image.png"
 
-BOX_OBJECT_IMG = "BOX_object_image.png"
+BOX_OBJECT_IMG = "BOX_object.png"
 
 KEY_IMG = "KEY_image.png"
 
-KEY_OBJECT_IMG = "KEY_object_image.png"
+KEY_OBJECT_IMG = "KEY_object.png"
 
 TILE_IMG = "TILE_image.png"
 
 ROCK_IMG = "ROCK_image.png"
 
-ROCK_OBJECT_IMG = "ROCK_object_image.png"
+ROCK_OBJECT_IMG = "ROCK_object.png"
