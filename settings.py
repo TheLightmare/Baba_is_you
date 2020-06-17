@@ -16,7 +16,9 @@ GREEN = (0, 255, 0)
 BGCOLOR = (0, 0, 0)
 
 PLAYER_HIT_RECT = pg.Rect(0, 0, TILESIZE, TILESIZE)
-PLAYER_IMG = "BABA_image.png"
+BABA_IMG = "BABA_image.png"
+BABA_OBJECT_IMG = "BABA_object.png"
+YOU_OBJECT_IMG = "YOU_special_object.png"
 
 WALL_HIT_RECT = pg.Rect(0, 0, TILESIZE, TILESIZE)
 WALL_IMG = "WALL_center_image.png"
