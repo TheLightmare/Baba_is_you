@@ -36,15 +36,16 @@ class Player(pg.sprite.Sprite) :
 
   def collide_with_objects(self, dx=0, dy=0):
     for obj in self.game.objects:
-      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
-        if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
-            l=obj.collide_with_objects(dx,dy)
-            
-            obj.x += dx
-            obj.y += dy
-        else :
-            dy=0
-            dx=0
+      for player_obj in self.game.player_group :
+        if obj.x == player_obj.x+TILESIZE*dx and obj.y == player_obj.y+TILESIZE*dy:
+          if (dx!=0 and obj.x <WIDTH-TILESIZE and obj.x>0) or (dy!=0 and obj.y <HEIGHT-TILESIZE and obj.y>0) :
+              l=obj.collide_with_objects(dx,dy)
+              
+              obj.x += dx
+              obj.y += dy
+          else :
+              dy=0
+              dx=0
     l=[dx,dy]
     return l
 
