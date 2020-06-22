@@ -54,6 +54,8 @@ class Game() :
 
     self.wall_object_img = pg.image.load(path.join(img_folder, WALL_OBJECT_IMG)).convert_alpha()
 
+    self.flag_object_img = pg.image.load(path.join(img_folder, FLAG_OBJECT_IMG)).convert_alpha()
+
     self.is_object_img = pg.image.load(path.join(img_folder, IS_OBJECT_IMG)).convert_alpha()
 
     self.push_object_img = pg.image.load(path.join(img_folder, PUSH_OBJECT_IMG)).convert_alpha()
@@ -67,6 +69,8 @@ class Game() :
     self.you_object_img = pg.image.load(path.join(img_folder, YOU_OBJECT_IMG)).convert_alpha()
     
     self.baba_object_img = pg.image.load(path.join(img_folder, BABA_OBJECT_IMG)).convert_alpha()
+
+    self.stop_object_img = pg.image.load(path.join(img_folder, STOP_OBJECT_IMG)).convert_alpha()
 
     
 
@@ -83,8 +87,9 @@ class Game() :
     self.objects_atributes = pg.sprite.Group()
 
     self.walls = pg.sprite.Group()
-
     self.babas = pg.sprite.Group()
+    self.rocks = pg.sprite.Group()
+    self.flags = pg.sprite.Group()
 
 
     self.player_group = pg.sprite.Group()
@@ -113,6 +118,10 @@ class Game() :
 
             Flag(self, col*TILESIZE, row*TILESIZE)
 
+          if tile == 'F':
+
+            Flag_object(self, col*TILESIZE, row*TILESIZE)
+
           if tile == 'b':
 
             Baba(self, col*TILESIZE, row*TILESIZE)
@@ -125,6 +134,17 @@ class Game() :
 
             Baba_object(self, col*TILESIZE, row*TILESIZE)
 
+          if tile == "r" :
+            
+            Rock(self, col*TILESIZE, row*TILESIZE)
+
+          if tile == "R" :
+
+            Rock_object(self, col*TILESIZE, row*TILESIZE)
+
+          if tile == 'S' :
+
+            Stop_object(self, col*TILESIZE, row*TILESIZE)
 
     self.player = Player(self, col*TILESIZE, row*TILESIZE)
     self.scan_map()
@@ -187,7 +207,11 @@ class Game() :
                   for obj in self.walls :
                     obj.collision_type = 'p'
                     
-                if type(names_obj) == Wall_object :
+                if type(names_obj) == Rock_object :
+                  for obj in self.rocks :
+                    obj.collision_type = 'p'
+
+                if type(names_obj) == Baba_object :
                   for obj in self.babas :
                     obj.collision_type = 'p'
                     
@@ -198,9 +222,14 @@ class Game() :
                   for obj in self.walls :
                     obj.collision_type = 's'
                     
-                if type(names_obj) == Wall_object :
+                if type(names_obj) == Baba_object :
                   for obj in self.babas :
                     obj.collision_type = 's'
+
+                if type(names_obj) == Rock_object :
+                  for obj in self.rocks :
+                    obj.collision_type = 's'
+                
                     
             if type(atributes_obj) == You_object :
 
@@ -209,6 +238,12 @@ class Game() :
 
                 if type(names_obj) == Wall_object :
                   self.player_group = self.walls
+
+                if type(names_obj) == Rock_object :
+                  self.player_group = self.rocks
+
+                if type(names_obj) == Flag_object :
+                  self.player_group = self.flags
     
     for obj in self.player_group : 
       obj.collision_type = 'player'

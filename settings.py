@@ -25,10 +25,12 @@ WALL_IMG = "WALL_center_image.png"
 WALL_OBJECT_IMG = "WALL_object.png"
 
 IS_OBJECT_IMG = "IS_white_object.png"
+STOP_OBJECT_IMG = "STOP_special_object.png"
 
 PUSH_OBJECT_IMG = "PUSH_special_object.png"
 
 FLAG_IMG = "FLAG_image.png"
+FLAG_OBJECT_IMG = "FLAG_object.png"
 
 BOX_IMG = "BOX_image.png"
 BOX_OBJECT_IMG = "BOX_object.png"

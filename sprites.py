@@ -27,7 +27,7 @@ class Player(pg.sprite.Sprite) :
     
     for player_obj in self.game.player_group :
       if player_obj.collision_type == 'player':
-        if player_obj.x+dx<=HEIGHT-TILESIZE and player_obj.x+dx>=0 and player_obj.y+dy<WIDTH-TILESIZE and player_obj.y+dy>=0:
+        if player_obj.x+dx<=WIDTH-TILESIZE and player_obj.x+dx>=0 and player_obj.y+dy<HEIGHT-TILESIZE and player_obj.y+dy>=0:
             l=player_obj.collide(dx, dy)
             dx=l[0]
             dy=l[1]
@@ -42,7 +42,7 @@ class Player(pg.sprite.Sprite) :
 class Stop_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
     self.collision_type = 'p'
-    self.groups = game.all_sprites, game.objects
+    self.groups = game.all_sprites, game.objects, game.objects_atributes
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.stop_object_img
@@ -372,16 +372,17 @@ class Key(pg.sprite.Sprite) :
 class Rock(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
     self.collision_type = 0
-    self.groups = game.all_sprites
+    self.groups = game.all_sprites, game.rocks
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
-    self.image = game.Rock_img
+    self.image = game.rock_img
     self.rect = self.image.get_rect()
     self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
     self.hit_rect = WALL_HIT_RECT
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
+    
   def collide(self, dx=0, dy=0):
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
@@ -491,6 +492,64 @@ class Wall_object(pg.sprite.Sprite) :
   def update(self) :
     self.rect.x = self.x
     self.rect.y = self.y
+
+
+
+class Flag_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.collision_type = 'p'
+    self.groups = game.all_sprites, game.objects_names, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.flag_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+    
+  def collide(self, dx=0, dy=0):
+    for obj in self.game.all_sprites:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if obj.collision_type == 'p' :
+            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+              l=obj.collide(dx,dy)
+              dx=l[0]
+              dy=l[1]
+              obj.x += dx
+              obj.y += dy
+            else :
+              dy=0
+              dx=0
+              
+        elif obj.collision_type == 's' :
+            dx=0
+            dy=0
+        elif obj.collision_type == 'player' :
+            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+              obj.collision_type=0
+              l=obj.collide(dx,dy)
+              dx=l[0]
+              dy=l[1]
+              obj.x += dx
+              obj.y += dy
+            else :
+              dy=0
+              dx=0
+        
+              
+        l=[dx,dy]
+        return l
+    l=[dx,dy]
+    return l
+    
+    
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
+
+
 
 class Box_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
