@@ -1,13 +1,3 @@
-"""
-
-Created on Wed Feb  5 08:26:01 2020
-
-@author: m.kowalski m.morgenthaler a.billaud
-
-"""
-
-
-
 import pygame as pg
 
 from os import path
@@ -22,13 +12,14 @@ from tilemap import *
 
 
 
-pg.init()
+
 
 class Game() :
 
 
 
   def __init__(self) :
+
     self.screen = pg.display.set_mode((WIDTH, HEIGHT))
 
     pg.key.set_repeat(500, 100)
@@ -80,7 +71,7 @@ class Game() :
     
 
   def new(self) :
-
+    self.bruh = pg.sprite.Group()
     self.all_sprites = pg.sprite.Group()
 
     self.objects = pg.sprite.Group()
@@ -136,6 +127,7 @@ class Game() :
 
 
     self.player = Player(self, col*TILESIZE, row*TILESIZE)
+    self.scan_map()
 
   def run(self) :
 
@@ -148,6 +140,9 @@ class Game() :
       self.update()
 
       self.draw()
+      
+      self.scan_map()
+      
 
 
 
@@ -157,7 +152,7 @@ class Game() :
 
     self.all_sprites.update()
 
-    self.scan_map()
+
 
    
 
@@ -170,19 +165,43 @@ class Game() :
 
 
   def scan_map(self) :
+    self.player_group = self.bruh
+    
+    for obj in self.all_sprites :
+        obj.collision_type = 0
 
     for is_obj in self.objects_is :
 
       for names_obj in self.objects_names :
 
         for atributes_obj in self.objects_atributes :
+          is_obj.collision_type = 'p'
+          atributes_obj.collision_type = 'p'
+          names_obj.collision_type = 'p'
 
           if ((is_obj.x - TILESIZE == names_obj.x and is_obj.x + TILESIZE == atributes_obj.x) or (is_obj.x + TILESIZE == names_obj.x and is_obj.x - TILESIZE == atributes_obj.x)) and (is_obj.y == names_obj.y and is_obj.y == atributes_obj.y) or ((is_obj.y - TILESIZE == names_obj.y and is_obj.y + TILESIZE == atributes_obj.y) or (is_obj.y + TILESIZE == names_obj.y and is_obj.y - TILESIZE == atributes_obj.y)) and (is_obj.x == names_obj.x and is_obj.x == atributes_obj.x):
-
-            if type(names_obj) == Wall_object and type(atributes_obj) == Push_object :
-
-                self.wall_collision = 2
-
+       
+            if type(atributes_obj) == Push_object :
+                
+                if type(names_obj) == Wall_object :
+                  for obj in self.walls :
+                    obj.collision_type = 'p'
+                    
+                if type(names_obj) == Wall_object :
+                  for obj in self.babas :
+                    obj.collision_type = 'p'
+                    
+                    
+            if type(atributes_obj) == Stop_object :
+                
+                if type(names_obj) == Wall_object :
+                  for obj in self.walls :
+                    obj.collision_type = 's'
+                    
+                if type(names_obj) == Wall_object :
+                  for obj in self.babas :
+                    obj.collision_type = 's'
+                    
             if type(atributes_obj) == You_object :
 
                 if type(names_obj) == Baba_object :
@@ -190,6 +209,11 @@ class Game() :
 
                 if type(names_obj) == Wall_object :
                   self.player_group = self.walls
+    
+    for obj in self.player_group : 
+      obj.collision_type = 'player'
+                  
+                
                 
 
                 
@@ -212,7 +236,7 @@ class Game() :
 
           self.quit()
 
-        if event.key == pg.K_LEFT : #and self.player.x>0:
+        if event.key == pg.K_LEFT :
 
           for i in range (0,TILESIZE):
 
@@ -222,7 +246,7 @@ class Game() :
 
             self.draw()
 
-        if event.key == pg.K_RIGHT : #and self.player.x<WIDTH-TILESIZE:
+        if event.key == pg.K_RIGHT :
 
           for i in range (0,TILESIZE):
 
@@ -232,7 +256,7 @@ class Game() :
 
             self.draw()
 
-        if event.key == pg.K_UP : #and self.player.y>0:
+        if event.key == pg.K_UP :
 
           for i in range (0,TILESIZE):
 
@@ -242,7 +266,7 @@ class Game() :
 
             self.draw()
 
-        if event.key == pg.K_DOWN : #and self.player.y<HEIGHT-TILESIZE:
+        if event.key == pg.K_DOWN :
 
           for i in range (0,TILESIZE):
 
@@ -261,6 +285,7 @@ class Game() :
     self.all_sprites.draw(self.screen)
 
     pg.display.flip()
+
 
 
 
@@ -335,4 +360,3 @@ while (not finished):
         else:
             finished=game_won()
 pg.quit()
-
