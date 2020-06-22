@@ -22,14 +22,13 @@ from tilemap import *
 
 
 
-
+pg.init()
 
 class Game() :
 
 
 
   def __init__(self) :
-
     self.screen = pg.display.set_mode((WIDTH, HEIGHT))
 
     pg.key.set_repeat(500, 100)
@@ -213,7 +212,7 @@ class Game() :
 
           self.quit()
 
-        if event.key == pg.K_LEFT and self.player.x>0:
+        if event.key == pg.K_LEFT : #and self.player.x>0:
 
           for i in range (0,TILESIZE):
 
@@ -223,7 +222,7 @@ class Game() :
 
             self.draw()
 
-        if event.key == pg.K_RIGHT and self.player.x<WIDTH-TILESIZE:
+        if event.key == pg.K_RIGHT : #and self.player.x<WIDTH-TILESIZE:
 
           for i in range (0,TILESIZE):
 
@@ -233,7 +232,7 @@ class Game() :
 
             self.draw()
 
-        if event.key == pg.K_UP and self.player.y>0:
+        if event.key == pg.K_UP : #and self.player.y>0:
 
           for i in range (0,TILESIZE):
 
@@ -243,7 +242,7 @@ class Game() :
 
             self.draw()
 
-        if event.key == pg.K_DOWN and self.player.y<HEIGHT-TILESIZE:
+        if event.key == pg.K_DOWN : #and self.player.y<HEIGHT-TILESIZE:
 
           for i in range (0,TILESIZE):
 
@@ -265,18 +264,75 @@ class Game() :
 
 
 
-  def show_start_screen(self):
-
-    pass
-
-            
-
 game = Game()
 
+def game_intro():
+    print("game_intro")
+    bg_intro = pg.image.load("Background.png").convert_alpha()
+    game.screen.blit(bg_intro, (233, 199))
+    pg.display.flip()
+    loop = bool(True)
+    while loop:
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN:
+                    print("go")
+                    loop = bool(False)
+                    return bool(False)
+                if event.key == pg.K_ESCAPE:
+                    print("out")
+                    loop = bool(False)
+                    return bool(True)
 
+def game_loop():
+    game = Game()
+    game.new()
+    return game.run()
+    
+def game_lost():
+    print("game_lost")
+    bg_lost = pg.image.load("Giveup.png").convert_alpha()
+    screen.blit(bg_lost, (235, 192))
+    pg.display.flip()
+    loop = bool(True)
+    while loop:
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN:
+                    print("restart")
+                    loop = bool(False)
+                    return bool(False)
+                if event.key == pg.K_ESCAPE:
+                    print("out")
+                    loop = bool(False)
+                    return bool(True)
+    
+def game_won():
+    print("game_won")
+    bg_won = pg.image.load("Thanks.png").convert_alpha()
+    screen.blit(bg_won, (235, 192))
+    pg.display.flip()
+    loop = bool(True)
+    while loop:
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN:
+                    print("restart")
+                    loop = bool(False)
+                    return bool(False)
+                if event.key == pg.K_ESCAPE:
+                    print("out")
+                    loop = bool(False)
+                    return bool(True)
 
-game.show_start_screen()
+finished=game_intro()
+while (not finished):
+    print("finished",finished)
+    if (not finished):
+        lost=game_loop()
+        if (lost):
+            finished=game_lost()
+        else:
+            finished=game_won()
+pg.quit()
 
-game.new()
-
-game.run()
