@@ -72,6 +72,8 @@ class Game() :
 
     self.stop_object_img = pg.image.load(path.join(img_folder, STOP_OBJECT_IMG)).convert_alpha()
 
+    self.winn_object_img = pg.image.load(path.join(img_folder, WINN_OBJECT_IMG)).convert_alpha()
+
     
 
   def new(self) :
@@ -146,6 +148,12 @@ class Game() :
 
             Stop_object(self, col*TILESIZE, row*TILESIZE)
 
+          if tile == '9':
+
+            Winn_object(self, col*TILESIZE, row*TILESIZE)
+
+
+
     self.player = Player(self, col*TILESIZE, row*TILESIZE)
     self.scan_map()
 
@@ -162,6 +170,13 @@ class Game() :
       self.draw()
       
       self.scan_map()
+
+      for Play in self.player_group :
+        for obj in self.all_sprites :
+          if Play.x == obj.x and Play.y == obj.y and obj.collision_type == 'w':
+            self.playing=game_won()
+
+
       
 
 
@@ -230,7 +245,21 @@ class Game() :
                   for obj in self.rocks :
                     obj.collision_type = 's'
                 
-                    
+
+            if type(atributes_obj) == Winn_object :
+
+                if type(names_obj) == Wall_object :
+                  for obj in self.walls :
+                    obj.collision_type = 'w'
+
+                if type(names_obj) == Flag_object :
+                  for obj in self.flags :
+                    obj.collision_type = 'w'
+
+                if type(names_obj) == Baba_object :
+                  for obj in self.babas :
+                    obj.collision_type = 'w'
+            
             if type(atributes_obj) == You_object :
 
                 if type(names_obj) == Baba_object :
@@ -370,7 +399,7 @@ def game_lost():
 def game_won():
     print("game_won")
     bg_won = pg.image.load("Thanks.png").convert_alpha()
-    screen.blit(bg_won, (235, 192))
+    game.screen.blit(bg_won, (235, 192))
     pg.display.flip()
     loop = bool(True)
     while loop:
@@ -382,8 +411,7 @@ def game_won():
                     return bool(False)
                 if event.key == pg.K_ESCAPE:
                     print("out")
-                    loop = bool(False)
-                    return bool(True)
+                    pg.quit()
 
 finished=game_intro()
 while (not finished):

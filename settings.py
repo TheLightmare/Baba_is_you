@@ -31,6 +31,7 @@ PUSH_OBJECT_IMG = "PUSH_special_object.png"
 
 FLAG_IMG = "FLAG_image.png"
 FLAG_OBJECT_IMG = "FLAG_object.png"
+WINN_OBJECT_IMG = "WIN_special_object.png"
 
 BOX_IMG = "BOX_image.png"
 BOX_OBJECT_IMG = "BOX_object.png"

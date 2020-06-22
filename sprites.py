@@ -58,7 +58,7 @@ class Stop_object(pg.sprite.Sprite) :
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
 
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -73,7 +73,7 @@ class Stop_object(pg.sprite.Sprite) :
             dy=0
             
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -114,7 +114,8 @@ class Wall(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -127,8 +128,9 @@ class Wall(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -138,8 +140,9 @@ class Wall(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -167,7 +170,8 @@ class Baba(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -180,8 +184,9 @@ class Baba(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -191,13 +196,13 @@ class Baba(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
     return l
-
   def update(self) :
     self.rect.x = self.x
     self.rect.y = self.y
@@ -206,7 +211,7 @@ class Baba(pg.sprite.Sprite) :
 class Flag(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
     self.collision_type = 0
-    self.groups = game.all_sprites
+    self.groups = game.all_sprites, game.flags
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.flag_img
@@ -220,7 +225,8 @@ class Flag(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -233,8 +239,9 @@ class Flag(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -244,8 +251,9 @@ class Flag(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -278,7 +286,8 @@ class Box(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -291,8 +300,9 @@ class Box(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -302,8 +312,9 @@ class Box(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -333,7 +344,8 @@ class Key(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -346,8 +358,9 @@ class Key(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -357,13 +370,14 @@ class Key(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
     return l
-    
+
     
   def update(self) :
     self.rect.x = self.x
@@ -372,7 +386,7 @@ class Key(pg.sprite.Sprite) :
 class Rock(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
     self.collision_type = 0
-    self.groups = game.all_sprites, game.rocks
+    self.groups = game.all_sprites
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.rock_img
@@ -382,12 +396,12 @@ class Rock(pg.sprite.Sprite) :
     self.hit_rect.center = self.rect.center
     self.x = x
     self.y = y
-    
   def collide(self, dx=0, dy=0):
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -400,8 +414,9 @@ class Rock(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -411,8 +426,9 @@ class Rock(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -457,7 +473,8 @@ class Wall_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -470,8 +487,9 @@ class Wall_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -481,8 +499,9 @@ class Wall_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -492,64 +511,6 @@ class Wall_object(pg.sprite.Sprite) :
   def update(self) :
     self.rect.x = self.x
     self.rect.y = self.y
-
-
-
-class Flag_object(pg.sprite.Sprite) :
-  def __init__(self, game, x, y) :
-    self.collision_type = 'p'
-    self.groups = game.all_sprites, game.objects_names, game.objects
-    pg.sprite.Sprite.__init__(self, self.groups)
-    self.game = game
-    self.image = game.flag_object_img
-    self.rect = self.image.get_rect()
-    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
-    self.hit_rect = WALL_HIT_RECT
-    self.hit_rect.center = self.rect.center
-    self.x = x
-    self.y = y
-    
-  def collide(self, dx=0, dy=0):
-    for obj in self.game.all_sprites:
-      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
-        if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
-              l=obj.collide(dx,dy)
-              dx=l[0]
-              dy=l[1]
-              obj.x += dx
-              obj.y += dy
-            else :
-              dy=0
-              dx=0
-              
-        elif obj.collision_type == 's' :
-            dx=0
-            dy=0
-        elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
-              obj.collision_type=0
-              l=obj.collide(dx,dy)
-              dx=l[0]
-              dy=l[1]
-              obj.x += dx
-              obj.y += dy
-            else :
-              dy=0
-              dx=0
-        
-              
-        l=[dx,dy]
-        return l
-    l=[dx,dy]
-    return l
-    
-    
-  def update(self) :
-    self.rect.x = self.x
-    self.rect.y = self.y
-
-
 
 class Box_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
@@ -568,7 +529,8 @@ class Box_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -581,8 +543,9 @@ class Box_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -592,13 +555,13 @@ class Box_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
     return l
-    
 
   def update(self) :
     self.rect.x = self.x
@@ -621,7 +584,8 @@ class Key_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -634,8 +598,9 @@ class Key_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -645,8 +610,9 @@ class Key_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -675,7 +641,8 @@ class Rock_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -688,8 +655,9 @@ class Rock_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -699,8 +667,9 @@ class Rock_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -729,7 +698,8 @@ class Baba_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -742,8 +712,9 @@ class Baba_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -753,8 +724,9 @@ class Baba_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -783,7 +755,8 @@ class Is_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -796,8 +769,9 @@ class Is_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -807,8 +781,9 @@ class Is_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -836,7 +811,8 @@ class Push_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -849,8 +825,9 @@ class Push_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -860,8 +837,9 @@ class Push_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -891,7 +869,8 @@ class You_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
               dy=l[1]
@@ -904,8 +883,9 @@ class You_object(pg.sprite.Sprite) :
         elif obj.collision_type == 's' :
             dx=0
             dy=0
+            
         elif obj.collision_type == 'player' :
-            if obj.x+dx<=HEIGHT-TILESIZE and obj.x+dx>=0 and obj.y+dy<WIDTH-TILESIZE and obj.y+dy>=0 :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               obj.collision_type=0
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -915,8 +895,9 @@ class You_object(pg.sprite.Sprite) :
             else :
               dy=0
               dx=0
+            
         
-              
+            
         l=[dx,dy]
         return l
     l=[dx,dy]
@@ -926,3 +907,114 @@ class You_object(pg.sprite.Sprite) :
     self.rect.x = self.x
     self.rect.y = self.y
     
+    
+class Flag_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.collision_type = 'p'
+    self.groups = game.all_sprites, game.objects_names, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.flag_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide(self, dx=0, dy=0):
+    for obj in self.game.all_sprites:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if obj.collision_type == 'p' :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
+              l=obj.collide(dx,dy)
+              dx=l[0]
+              dy=l[1]
+              obj.x += dx
+              obj.y += dy
+            else :
+              dy=0
+              dx=0
+              
+        elif obj.collision_type == 's' :
+            dx=0
+            dy=0
+            
+        elif obj.collision_type == 'player' :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
+              obj.collision_type=0
+              l=obj.collide(dx,dy)
+              dx=l[0]
+              dy=l[1]
+              obj.x += dx
+              obj.y += dy
+            else :
+              dy=0
+              dx=0
+            
+        
+            
+        l=[dx,dy]
+        return l
+    l=[dx,dy]
+    return l
+
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
+    
+    
+class Winn_object(pg.sprite.Sprite) :
+  def __init__(self, game, x, y) :
+    self.collision_type = 'p'
+    self.groups = game.all_sprites, game.objects_atributes, game.objects
+    pg.sprite.Sprite.__init__(self, self.groups)
+    self.game = game
+    self.image = game.winn_object_img
+    self.rect = self.image.get_rect()
+    self.rect.center = (x + TILESIZE/2, y + TILESIZE/2)
+    self.hit_rect = WALL_HIT_RECT
+    self.hit_rect.center = self.rect.center
+    self.x = x
+    self.y = y
+  def collide(self, dx=0, dy=0):
+    for obj in self.game.all_sprites:
+      if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
+        if obj.collision_type == 'p' :
+
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
+              l=obj.collide(dx,dy)
+              dx=l[0]
+              dy=l[1]
+              obj.x += dx
+              obj.y += dy
+            else :
+              dy=0
+              dx=0
+              
+        elif obj.collision_type == 's' :
+            dx=0
+            dy=0
+            
+        elif obj.collision_type == 'player' :
+            if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
+              obj.collision_type=0
+              l=obj.collide(dx,dy)
+              dx=l[0]
+              dy=l[1]
+              obj.x += dx
+              obj.y += dy
+            else :
+              dy=0
+              dx=0
+            
+        
+            
+        l=[dx,dy]
+        return l
+    l=[dx,dy]
+    return l
+
+  def update(self) :
+    self.rect.x = self.x
+    self.rect.y = self.y
