@@ -7,8 +7,8 @@ Created on Wed Feb  5 09:32:17 2020
 
 import pygame as pg
 
-WIDTH = 1000
-HEIGHT = 1000
+WIDTH = 1008
+HEIGHT = 1008
 
 TILESIZE = 48
 YELLOW = (255, 255, 0)
