@@ -201,6 +201,7 @@ class Game() :
 
   def scan_map(self) :
     self.player_group = self.bruh
+    self.previous_time = 1
     
     for obj in self.all_sprites :
         obj.collision_type = 0
@@ -209,6 +210,19 @@ class Game() :
 
       for names_obj in self.objects_names :
 
+        for names_obj_2 in self.objects_names :
+          is_obj.collision_type = 'p'
+          names_obj_2.collision_type = 'p'
+          names_obj.collision_type = 'p'
+
+          if self.previous_time == 0 and ((is_obj.x - TILESIZE == names_obj.x and is_obj.x + TILESIZE == names_obj_2.x) and (is_obj.y == names_obj.y and is_obj.y == names_obj_2.y)) or ((is_obj.y - TILESIZE == names_obj.y and is_obj.y + TILESIZE == names_obj_2.y) and (is_obj.x == names_obj.x and is_obj.x == names_obj_2.x)):
+            self.previous_time = 1
+            
+
+          else :
+            self.previous_time = 0
+            
+            
         for atributes_obj in self.objects_atributes :
           is_obj.collision_type = 'p'
           atributes_obj.collision_type = 'p'
@@ -230,8 +244,16 @@ class Game() :
                   for obj in self.babas :
                     obj.collision_type = 'p'
                     
+                if type(names_obj) == Flag_object :
+                  for obj in self.flags :
+                    obj.collision_type = 'p'
+                    
                     
             if type(atributes_obj) == Stop_object :
+            
+                if type(names_obj) == Flag_object :
+                  for obj in self.flags :
+                    obj.collision_type = 's'
                 
                 if type(names_obj) == Wall_object :
                   for obj in self.walls :
@@ -258,6 +280,10 @@ class Game() :
 
                 if type(names_obj) == Baba_object :
                   for obj in self.babas :
+                    obj.collision_type = 'w'
+                    
+                if type(names_obj) == Rock_object :
+                  for obj in self.rocks :
                     obj.collision_type = 'w'
             
             if type(atributes_obj) == You_object :
@@ -340,6 +366,10 @@ class Game() :
 
             self.draw()
 
+        if event.key == pg.K_q :
+
+          self.console()
+
 
 
   def draw(self):
@@ -351,12 +381,18 @@ class Game() :
     pg.display.flip()
 
 
-
+  def console(self) :
+    print("> game console, enter command : ")
+    cmd = str(input("> "))
+    try:
+      exec(cmd)
+    except:
+      print("> ERROR")
 
 game = Game()
 
 def game_intro():
-    print("game_intro")
+    print("title screen")
     bg_intro = pg.image.load("Background.png").convert_alpha()
     game.screen.blit(bg_intro, (233, 199))
     pg.display.flip()
@@ -365,11 +401,11 @@ def game_intro():
         for event in pg.event.get():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN:
-                    print("go")
+                    print("start")
                     loop = bool(False)
                     return bool(False)
                 if event.key == pg.K_ESCAPE:
-                    print("out")
+                    print("shutdown")
                     loop = bool(False)
                     return bool(True)
 
@@ -397,7 +433,7 @@ def game_lost():
                     return bool(True)
     
 def game_won():
-    print("game_won")
+    print("game is won")
     bg_won = pg.image.load("Thanks.png").convert_alpha()
     game.screen.blit(bg_won, (235, 192))
     pg.display.flip()
@@ -410,8 +446,11 @@ def game_won():
                     loop = bool(False)
                     return bool(False)
                 if event.key == pg.K_ESCAPE:
-                    print("out")
-                    pg.quit()
+                    print("shutdown")
+                    game.quit()
+
+
+  
 
 finished=game_intro()
 while (not finished):

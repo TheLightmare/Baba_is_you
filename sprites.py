@@ -27,7 +27,7 @@ class Player(pg.sprite.Sprite) :
     
     for player_obj in self.game.player_group :
       if player_obj.collision_type == 'player':
-        if player_obj.x+dx<=WIDTH-TILESIZE and player_obj.x+dx>=0 and player_obj.y+dy<HEIGHT-TILESIZE and player_obj.y+dy>=0:
+        if player_obj.x + dx <= WIDTH - TILESIZE and player_obj.x + dx >= 0 and player_obj.y + dy < HEIGHT - TILESIZE and player_obj.y + dy >= 0:
             l=player_obj.collide(dx, dy)
             dx=l[0]
             dy=l[1]
@@ -57,7 +57,6 @@ class Stop_object(pg.sprite.Sprite) :
     for obj in self.game.all_sprites:
       if obj.x == self.x+TILESIZE*dx and obj.y == self.y+TILESIZE*dy:
         if obj.collision_type == 'p' :
-
             if obj.x+dx<=WIDTH-TILESIZE and obj.x+dx>=0 and obj.y+dy<HEIGHT-TILESIZE and obj.y+dy>=0 :
               l=obj.collide(dx,dy)
               dx=l[0]
@@ -386,7 +385,7 @@ class Key(pg.sprite.Sprite) :
 class Rock(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
     self.collision_type = 0
-    self.groups = game.all_sprites
+    self.groups = game.all_sprites, game.rocks
     pg.sprite.Sprite.__init__(self, self.groups)
     self.game = game
     self.image = game.rock_img
@@ -458,6 +457,7 @@ class Tile(pg.sprite.Sprite) :
 
 class Wall_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
+    self.associated_class = Wall
     self.collision_type = 'p'
     self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
@@ -514,6 +514,7 @@ class Wall_object(pg.sprite.Sprite) :
 
 class Box_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
+    self.associated_class = Box
     self.collision_type = 'p'
     self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
@@ -569,6 +570,7 @@ class Box_object(pg.sprite.Sprite) :
 
 class Key_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
+    self.associated_class = Key
     self.collision_type = 'p'
     self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
@@ -626,6 +628,7 @@ class Key_object(pg.sprite.Sprite) :
 
 class Rock_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
+    self.associated_class = Rock
     self.collision_type = 'p'
     self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
@@ -683,6 +686,7 @@ class Rock_object(pg.sprite.Sprite) :
     
 class Baba_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
+    self.associated_class = Baba
     self.collision_type = 'p'
     self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
@@ -910,6 +914,7 @@ class You_object(pg.sprite.Sprite) :
     
 class Flag_object(pg.sprite.Sprite) :
   def __init__(self, game, x, y) :
+    self.associated_class = Flag
     self.collision_type = 'p'
     self.groups = game.all_sprites, game.objects_names, game.objects
     pg.sprite.Sprite.__init__(self, self.groups)
